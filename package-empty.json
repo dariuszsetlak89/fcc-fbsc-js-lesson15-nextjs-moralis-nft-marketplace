@@ -1,0 +1,15 @@
+{
+    "name": "project-name",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Dariusz Setlak",
+    "private": true,
+    "devDependencies": {},
+    "dependencies": {},
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    }
+}
