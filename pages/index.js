@@ -23,18 +23,22 @@ export default function Home() {
     // Local development
 
     const { isWeb3Enabled } = useMoralis();
+    const numberOfItems = 100;
     const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery(
         // TableName, Function for the query
-        // How it works: Grab from database useMoralisQuery only ActiveItem table and grab only the first 10 in descending order of the tokenIds (from 9 to 0)
+        // How it works: Grab from database useMoralisQuery only ActiveItem table and grab only the first x in descending order of the tokenIds (from x to 0)
         // Save the results of fetching in 'listedNfts' section
         "ActiveItem",
-        (query) => query.limit(10).descending("tokenId")
+        (query) => query.limit(numberOfItems).descending("tokenId")
     );
     console.log(listedNfts);
 
     return (
         <div className="container mx-auto">
-            <h1 className="py-4 px-4 font-bold text-2xl">Recently Listed</h1>
+            <h1 className="px-4 pt-4 pb-2 font-bold text-2xl">Recently listed NFT items</h1>
+            <h2 className="px-4 pt-2 pb-8">
+                If you own the item, click to update it's selling price! If not, click to buy it!
+            </h2>
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
                     fetchingListedNfts ? (
@@ -45,14 +49,16 @@ export default function Home() {
                             const { price, nftAddress, tokenId, marketplaceAddress, seller } =
                                 nft.attributes;
                             return (
-                                <NFTBox
-                                    price={price}
-                                    nftAddress={nftAddress}
-                                    tokenId={tokenId}
-                                    marketplaceAddress={marketplaceAddress}
-                                    seller={seller}
-                                    key={`${nftAddress}${tokenId}`}
-                                />
+                                <div className="m-2">
+                                    <NFTBox
+                                        price={price}
+                                        nftAddress={nftAddress}
+                                        tokenId={tokenId}
+                                        marketplaceAddress={marketplaceAddress}
+                                        seller={seller}
+                                        key={`${nftAddress}${tokenId}`}
+                                    />
+                                </div>
                             );
                         })
                     )
